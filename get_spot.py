@@ -13,7 +13,7 @@ SPOT_URL: _ty.Final = ('http://www.lrde.epita.fr/dload/spot/'
                     f'spot-{SPOT_VERSION}.tar.gz')
 FILE_PATH = os.path.dirname(os.path.realpath(__file__))
 SPOT_PATH = os.path.join(FILE_PATH,f'spot-{SPOT_VERSION}')
-
+ENV_PATH = '~/flowsynth/.venv'#os.path.join(FILE_PATH,'.venv') #'~/usr'
 
 def fetch_spot():
     filename = SPOT_TARBALL
@@ -54,10 +54,12 @@ def untar(filename):
 def make_spot():
     """Compile spot."""
     path = SPOT_PATH
-    cmd = ["./configure"]
-    subprocess.call(cmd, cwd=path)
+    cmd = ["./configure --prefix "+ ENV_PATH]
+    print('running: '+str(cmd)+' in '+path)
+    # subprocess.call(cmd, cwd=path)
+    subprocess.check_call('./configure --prefix /flowsynth/.venv', shell=True, cwd=path)
     subprocess.call(['make'], cwd=path)
-    subprocess.call(['make install'], cwd=path)
+    subprocess.call(['make','install'], cwd=path)
 
 if __name__ == '__main__':
     fetch_spot()
