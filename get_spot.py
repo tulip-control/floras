@@ -6,6 +6,7 @@ import subprocess
 import os
 import typing as _ty
 import textwrap as _tw
+import sys
 
 SPOT_VERSION: _ty.Final = '2.12'
 SPOT_TARBALL: _ty.Final = f'spot-{SPOT_VERSION}.tar.gz'
@@ -13,7 +14,7 @@ SPOT_URL: _ty.Final = ('http://www.lrde.epita.fr/dload/spot/'
                     f'spot-{SPOT_VERSION}.tar.gz')
 FILE_PATH = os.path.dirname(os.path.realpath(__file__))
 SPOT_PATH = os.path.join(FILE_PATH,f'spot-{SPOT_VERSION}')
-ENV_PATH = '~/flowsynth/.venv'#os.path.join(FILE_PATH,'.venv') #'~/usr'
+ENV_PATH = sys.prefix
 
 def fetch_spot():
     filename = SPOT_TARBALL
