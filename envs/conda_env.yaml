@@ -1,0 +1,7 @@
+name: spot_conda
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - spot
