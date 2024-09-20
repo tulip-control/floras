@@ -8,7 +8,14 @@ import os
 from ipdb import set_trace as st
 
 class TransitionSystemInput():
-    """Input format containing data to create a transition system."""
+    """Input format containing data to create a transition system.
+
+    Args:
+        states: States of the system model.
+        transitions: Transitions between system states.
+        labels: Labels of each system state.
+        init: Initial state of the system.
+    """
     def __init__(self,states,transitions,labels, init):
         self.states = states
         self.transitions = transitions
@@ -23,17 +30,17 @@ class TransitionSystemInput():
 class TranSys():
     """Transition system class.
     T = (S, A, delta, S_init, AP, L).
-    S: states
-    A: actions
-    delta: transition relation,
-    S_init: initial_states,
-    AP: the set of atomic propositions,
-    L: labels.
 
     Args:
-    S, A, E, I, AP_dict
+        transition_system_input: input format for states, transitions, initial states, and labels.
+        S: states
+        A: actions
+        E: transition relation
+        I: initial_states
+        AP_dict: the set of atomic propositions
+        L: labels
     """
-    def __init__(self, transition_system_input = None, S=None, A=None, E=None, I=None, AP_dict=None):
+    def __init__(self, transition_system_input = None, S=None, A=None, E=None, I=None, AP_dict=None, L=None):
         self.S = S
         self.A = A
         self.E = E
@@ -48,6 +55,9 @@ class TranSys():
             self.setup()
 
     def setup(self):
+        """
+        Set up the transition system from the input data.
+        """
         self.S = list(self.input.states)
         self.A = ['act'+str(k) for k in range(0,5)] # update for different actions later
         self.construct_transition_function()
@@ -57,10 +67,16 @@ class TranSys():
 
 
     def print_transitions(self):
+        """
+        Print all transitions.
+        """
         for e_out, e_in in self.E.items():
             print("node out: " + str(e_out) +  " node in: " + str(e_in))
 
     def construct_transition_function(self):
+        """
+        Create the set of edges E from the input data.
+        """
         self.E = dict()
         for s in self.input.states:
             i = 0
@@ -75,7 +91,6 @@ class TranSys():
         the relevant states to define what the agent must do.
         Need to setup atomic propositions.
         """
-        # self.AP = [spot.formula.ap("goal"), spot.formula.ap("int")]
         self.AP_dict = od()
         for s in self.S: # If the system state is the init or goal
             self.AP_dict[s] = []
@@ -85,9 +100,15 @@ class TranSys():
                     self.AP_dict[s].append(spot.formula.ap(label))
 
     def construct_initial_conditions(self):
+        """
+        Set the initial state.
+        """
         self.I = self.input.init
 
     def construct_labels(self):
+        """
+        Add the labels to the states in the form of spot formulas.
+        """
         self.L = od()
         for s in self.S:
             if s in self.AP_dict.keys():
@@ -96,6 +117,12 @@ class TranSys():
                 self.L[s] = {}
 
     def save_plot(self, fn):
+        """
+        Save a pdf of the graph of the transition system.
+
+        Args:
+            fn: Filename to store the figure under `filename.pdf'.
+        """
         self.G = nx.DiGraph()
         self.G.add_nodes_from(list(self.S))
 
@@ -111,7 +138,6 @@ class TranSys():
         self.G.add_edges_from(edges)
         nx.set_edge_attributes(self.G, edge_attr)
 
-        """Plot the product transition system as dot graph."""
         G_agr = nx.nx_agraph.to_agraph(self.G)
         G_agr.node_attr['style'] = 'filled'
         G_agr.node_attr['gradientangle'] = 90

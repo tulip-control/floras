@@ -14,6 +14,17 @@ from src.flowsynth.components.automata import Automaton
 spot.setup(show_default='.tvb')
 
 class Product(TranSys):
+    """
+    Product class defines the product of an Automaton and a
+    transition system as the tuple
+    T = (S, A, delta, S_init, AP, L).
+    S: states
+    A: actions
+    delta: transition relation,
+    S_init: initial_states,
+    AP: the set of atomic propositions,
+    L: labels.
+    """
     def __init__(self, product_transys, spec_prod_automaton):
         super().__init__()
         self.transys=product_transys

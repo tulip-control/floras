@@ -1,5 +1,7 @@
-"""Contains automaton class and functions to set up automata from the specifications."""
-
+"""
+Contains automaton class and functions to set up automata from the specifications.
+"""
+from __future__ import annotations
 import numpy as np
 import spot
 import networkx as nx
@@ -14,12 +16,12 @@ class Automaton:
     Automaton class defines an Automaton as the tuple
     B = (Q, Sigma, Delta, Q_init, Acc)
 
-    where
-    Q: the states,
-    Sigma: the alphabet 2^AP,
-    Delta: the transition function,
-    Q_init: the initial states,
-    Acc: The set of acceptance conditions.
+    Args:
+        Q: the states,
+        q_init: the initial states,
+        ap: the atomic propositions,
+        delta: the transition function,
+        Acc: The set of acceptance conditions.
     """
     def __init__(self, Q, qinit, ap, delta, Acc):
         self.Q=Q
@@ -30,11 +32,18 @@ class Automaton:
         self.Acc = Acc
 
     def print_transitions(self):
+        """
+        Print the transitions.
+        """
         for k, v in self.delta.items():
             print("out state and formula: ", k, " in state: ", v)
 
     def complement_negation(self, propositions):
-        """Negation of all atomic propositions not listed in propositions.
+        """
+        Negation of all atomic propositions not listed in propositions.
+
+        Args:
+            propositions: List of all propositions.
         """
         and_prop = spot.formula.And(list(propositions))
         comp_prop = [] # Complementary propositions
@@ -48,26 +57,13 @@ class Automaton:
         complete_formula = spot.formula.And([and_prop, and_comp_prop]) # Taking complement of complete formula
         return complete_formula
 
-    def get_transition(self, q0, propositions):
-        and_prop = spot.formula.And(list(propositions))
-        transition = None
-        for k,v in self.delta.items():
-            if k[0] == q0:
-                complete_formula = self.complement_negation(propositions)
-                try:
-                    if k[1] == True:
-                        transition = v
-                        return transition
-                    if spot.contains(k[1], complete_formula):
-                        transition = v
-                        return transition
-                except:
-                    pdb.set_trace()
-        return None
 
     def save_plot(self, fn):
         '''
-        Save the an image of the automaton.
+        Save the an image of the automaton as a pdf.
+
+        Args:
+            fn: Name of the file to save the figure.
         '''
         G = nx.DiGraph()
         G.add_nodes_from(self.Q)
@@ -120,7 +116,13 @@ class Automaton:
 
 # Functions to take in spot formulas and return automaton object attributes:
 def get_automaton(formula_str, playername):
-    """Get automaton from LTL formula."""
+    """
+    Get automaton from LTL formula.
+
+    Args:
+        formula_str: LTL formula.
+        playername: Whether the automaton is for the system ('sys') or the tester ('test').
+    """
     spot_aut = spot.translate(formula_str, 'Buchi', 'state-based', 'complete')
     Q, qinit, tau, AP = construct_automaton_attr(spot_aut)
     Acc = construct_Acc(spot_aut, player=playername)
@@ -128,16 +130,46 @@ def get_automaton(formula_str, playername):
     return aut, spot_aut
 
 def get_system_automaton(formula_str):
+    """
+    Get system automaton from LTL formula.
+
+    Args:
+        formula_str: LTL formula.
+
+    Returns:
+        aut_sys: System automaton.
+        spot_aut_sys: Spot system automaton.
+    """
     playername="sys"
     aut_sys, spot_aut_sys= get_automaton(formula_str, playername)
     return aut_sys, spot_aut_sys
 
 def get_tester_automaton(formula_str):
+    """
+    Get tester automaton from LTL formula.
+
+    Args:
+        formula_str: LTL formula.
+
+    Returns:
+        aut_test: Tester automaton.
+        spot_aut_test: Spot tester automaton.
+    """
     playername="test"
     aut_test, spot_aut_test = get_automaton(formula_str, playername)
     return aut_test, spot_aut_test
 
 def get_product_automaton(spot_aut_sys, spot_aut_test):
+    """
+    Get the specification product automaton.
+
+    Args:
+        spot_aut_sys: Spot object of system automaton.
+        spot_aut_test: Spot object of tester automaton.
+
+    Returns:
+        aut_prod: Specification product automaton.
+    """
     spot_aut_prod = spot.product(spot_aut_sys, spot_aut_test)
 
     Q_prod, qinit_prod, tau_prod, AP_prod = construct_automaton_attr(spot_aut_prod)
@@ -149,6 +181,13 @@ def get_product_automaton(spot_aut_sys, spot_aut_test):
 def construct_Acc(spot_aut, player="sys"):
     '''
     Constructing the Automaton attribute Acc for a single automaton
+
+    Args:
+        spot_aut: Spot automaton.
+        player: Player name, 'sys' or 'test'.
+
+    Returns:
+        Acc: Accepting states of the automaton.
     '''
     Acc = dict()
     acc_states = get_acc_states(spot_aut)
@@ -158,6 +197,16 @@ def construct_Acc(spot_aut, player="sys"):
 
 # Functions to construct the product automaton
 def get_prod_automaton(system_formula_str, tester_formula_str):
+    """
+    Construct the specification product automaton.
+
+    Args:
+        system_formula_str: LTL formula of system objective.
+        tester_formula_str: LTL formula of test objective.
+
+    Returns:
+        aut_prod: Specification product automaton.
+    """
     spot_aut_sys = spot.translate(system_formula_str, 'Buchi', 'state-based', 'complete')
     spot_aut_test = spot.translate(tester_formula_str, 'Buchi', 'state-based', 'complete')
     spot_aut_prod = spot.product(spot_aut_sys, spot_aut_test)
@@ -170,7 +219,16 @@ def get_prod_automaton(system_formula_str, tester_formula_str):
 
 def construct_automaton_attr(spot_aut):
     '''
-    Function that returns attributes (except accepting conditions) needed to build an Automaton object from a spot automaton
+    Function that returns attributes (except accepting conditions) needed to build an Automaton object from a spot automaton.
+
+    Args:
+        spot_aut: Spot automaton.
+
+    Returns:
+        Q: states,
+        qinit: initial states,
+        tau: transitions,
+        AP: atomic propositions.
     '''
     nstates = count_automaton_states(spot_aut)
     Q = [get_state_str(k) for k in range(nstates)]
@@ -182,8 +240,11 @@ def construct_automaton_attr(spot_aut):
 
 def count_automaton_states(spot_aut):
     '''
-    Input: Body of hoa string between the --BODY-- and --END-- lines
-    Output: Number of states in the automaton
+    Args:
+        spot_aut: Spot automaton
+
+    Returns:
+        nstates: Number of states in the automaton
     '''
     hoa_body = get_hoa_body(spot_aut)
     nstates = 0
@@ -193,6 +254,15 @@ def count_automaton_states(spot_aut):
     return nstates
 
 def get_hoa_body(spot_aut):
+    """
+    Parse the body of a hoa string.
+
+    Args:
+        spot_aut: Spot automaton
+
+    Returns:
+        hoa_body: Body of hoa string between the --BODY-- and --END-- lines
+    """
     spot_aut_str = spot_aut.to_str('hoa')
     lines = spot_aut_str.split('\n')
     body_line = lines.index("--BODY--")
@@ -210,6 +280,15 @@ def read_state(state):
     return int(state)
 
 def get_initial_state(spot_aut):
+    """
+    Find the initial state.
+
+    Args:
+        spot_aut: Spot automaton
+
+    Returns:
+        init_state: Initial state of the automaton.
+    """
     spot_aut_str = spot_aut.to_str('hoa')
     lines = spot_aut_str.split('\n')
     for line in lines:
@@ -221,6 +300,15 @@ def get_initial_state(spot_aut):
     return init_state
 
 def get_transitions(spot_aut):
+    """
+    Get the transitions from the automaton.
+
+    Args:
+        spot_aut: Spot automaton
+
+    Returns:
+        tau: Transitions in the automaton
+    """
     formula_dict = get_formula_dict(spot_aut)
     hoa = get_hoa_body(spot_aut)
     tau = {}
@@ -236,9 +324,14 @@ def get_transitions(spot_aut):
 
 def get_formula_dict(spot_aut):
     '''
-    Input: AP is a list of spot atomic propositions
-    Get formula dict from a list of spot atomic propositions
-    Formula dict is necessary for interpreting the atomic propositions
+    Get formula dict from a list of spot atomic propositions.
+    Formula dict is necessary for interpreting the atomic propositions.
+
+    Args:
+        spot_aut: Spot automaton
+
+    Returns:
+        formula_dict: Dictionary used in the automaton.
     '''
     AP = get_APs(spot_aut)
     formula_dict = {"t": True}
@@ -253,9 +346,13 @@ def parse_hoa_transition_str(line):
     Function separating the hoa line into the cnf_portion, the incoming state, and
     any information on the accepting condition
 
-    Input: Line with transition formula, input state, and transition acceptance as a string
+    Args:
+        line: Line with transition formula, input state, and transition acceptance as a string
 
-    Output: CNF formula, input_state_str, and list of accepting conditions (if any).
+    Returns:
+        cnf_str: CNF formula,
+        qin_st: Incoming state string,
+        transition_acc_conditions: List of accepting conditions (if any)
     '''
     assert "[" in line
     assert "]" in line
@@ -278,7 +375,14 @@ def parse_hoa_transition_str(line):
 def parse_cnf_str(cnf_str, formula_dict):
     '''
     Unpacking a string cnf formula into a list of conjunctive formulas, and then parsing each of those
-    conjunctive formulas separately
+    conjunctive formulas separately.
+
+    Args:
+        cnf_str: CNF formula
+        formula_dict: Dictionary used in the automaton
+
+    Returns:
+        formula: Parsed formula
     '''
     conj_str_list = [x.strip() for x in re.split(r"\|", cnf_str)]
 
@@ -294,6 +398,14 @@ def parse_cnf_str(cnf_str, formula_dict):
     return formula
 
 def parse_conjunction_str(conj_str, formula_dict):
+    """
+    Args:
+        conj_str: String of cunjunctive formulas
+        formula_dict: Formulas used in automaton
+
+    Returns:
+        formula: Formula in Spot form
+    """
     spot_prop_list = []
     prop_list = re.split(r"[\[&\]]", conj_str)
     prop_list = list(filter(None, prop_list))
@@ -307,7 +419,13 @@ def parse_conjunction_str(conj_str, formula_dict):
 
 def get_APs(spot_aut):
     '''
-    Return a list of spot atomic propositions in a spot Buchi automaton
+    Return a list of spot atomic propositions in a Spot Buchi automaton.
+
+    Args:
+        spot_aut: Spot automaton.
+
+    Returns:
+        AP: Atomic propositions used in automaton.
     '''
     spot_aut_str = spot_aut.to_str('hoa')
     lines = spot_aut_str.split('\n')
@@ -330,6 +448,13 @@ def get_APs(spot_aut):
 def construct_product_Acc(spot_aut_sys, spot_aut_test):
     '''
     Return the accepting state dictionary for the synchronous product of the system and tester acceptances.
+
+    Args:
+        spot_aut_sys: Spot system automaton
+        spot_aut_test: Spot test automaton
+
+    Returns:
+        Acc: Dictioary of accepting states for 'sys' and 'test'
     '''
     Acc = dict()
     spec_prod = spot.product(spot_aut_sys, spot_aut_test)
@@ -365,11 +490,12 @@ def construct_product_Acc(spot_aut_sys, spot_aut_test):
 
 def get_product_states(spec_prod):
     '''
-    Output:
-    - product_states: list of pairs of states
-    - product_states_dict: dictionary of product state pairs mapping to a state number
-      as in: product_states_dict[pair_prod_state] = num_prod_state and
-      product_states[num_prod_state] = pair_prod_state
+    Args:
+        spec_prod: Specification product automaton.
+
+    Returns:
+        product_states: list of pairs of states (product_states[num_prod_state] = pair_prod_state)
+        product_states_dict: dictionary of product state pairs mapping to a state number (product_states_dict[pair_prod_state] = num_prod_state)
     '''
     product_states = spec_prod.get_product_states()
     assert len(product_states) == count_automaton_states(spec_prod)
@@ -382,7 +508,13 @@ def get_acc_states(spot_aut):
     '''
     Return a list of accepting states in the spot_automaton by parsing the body of the automaton
     In the prefix of the hoa_string, the succeeding portion of Acc refers to the number of accepting
-    conditions in the automaton (double check)
+    conditions in the automaton.
+
+    Args:
+        spot_aut: Spot automaton
+
+    Returns:
+        acc_states: Accepting states of the automaton.
     '''
     acc_states = []
     hoa_body = get_hoa_body(spot_aut)
