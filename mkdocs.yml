@@ -1,0 +1,28 @@
+site_name: FLORAS - Flow-based Reactive Test Synthesis for Autonomous Systems
+site_url: https://example.com
+theme:
+  name: material
+
+nav:
+  - Home:
+    - Welcome: index.md
+    - Installing: installing.md
+  - Getting Started:
+    - Installation: installing.md
+  - API:
+    - Automata: automata.md
+    - Product: product.md
+    - Transition System: transition_system.md
+    - Optimization: optimization.md
+  - Contributing:
+    - Contributing: contributing.md
+
+plugins:
+- mkdocstrings:
+    handlers:
+      python:
+        paths: [src]  # search packages in the src folder
+
+
+copyright: >
+  Copyright &copy; 2024 - <script>document.write(new Date().getFullYear())</script> Caltech
