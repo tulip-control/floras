@@ -57,6 +57,29 @@ class Automaton:
         complete_formula = spot.formula.And([and_prop, and_comp_prop]) # Taking complement of complete formula
         return complete_formula
 
+    def get_transition(self, q0, propositions):
+        """
+        Get the transition.
+
+        Args:
+            q0: Initial state,
+            propositions: List of propositions.
+        """
+        and_prop = spot.formula.And(list(propositions))
+        transition = None
+        for k,v in self.delta.items():
+            if k[0] == q0:
+                complete_formula = self.complement_negation(propositions)
+                try:
+                    if k[1] == True:
+                        transition = v
+                        return transition
+                    if spot.contains(k[1], complete_formula):
+                        transition = v
+                        return transition
+                except:
+                    pdb.set_trace()
+        return None
 
     def save_plot(self, fn):
         '''

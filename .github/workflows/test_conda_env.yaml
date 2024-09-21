@@ -40,11 +40,8 @@ jobs:
       - name: Add Gurobipy
         run: pip install gurobipy
 
-      - name: Install flowsynth
-        run: pip install .
-
       - name : Install Package for Testing
         run : conda install pytest
 
       - name : Run tests
-        run : pytest tests/tests.py
+        run : pytest
