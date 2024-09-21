@@ -1,9 +1,8 @@
 name: Testing
 on:
   push:
-    paths:
-      - 'envs/conda_env.yaml'
-      - '.github/workflows/conda.yaml'
+    branches:
+      - 'main'
 
 jobs:
   create-env:
