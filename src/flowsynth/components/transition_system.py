@@ -1,6 +1,6 @@
 import spot
 import pdb
-from ast import literal_eval as make_tuple
+# from ast import literal_eval as make_tuple
 import matplotlib.pyplot as plt
 from collections import OrderedDict as od
 import networkx as nx
@@ -144,7 +144,6 @@ class TranSys():
 
         for i in G_agr.nodes():
             n = G_agr.get_node(i)
-            ntuple = make_tuple(n)
             n.attr['fillcolor'] = 'white'
             n.attr['shape'] = 'circle'
 
