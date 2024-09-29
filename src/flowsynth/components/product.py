@@ -8,8 +8,8 @@ from collections import OrderedDict as od
 import os
 import networkx as nx
 from itertools import product
-from src.flowsynth.components.transition_system import TranSys
-from src.flowsynth.components.automata import Automaton
+from flowsynth.components.transition_system import TranSys
+from flowsynth.components.automata import Automaton
 
 spot.setup(show_default='.tvb')
 

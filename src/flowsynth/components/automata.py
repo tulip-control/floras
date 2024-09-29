@@ -8,7 +8,7 @@ import networkx as nx
 from collections import OrderedDict as od
 import re
 import os
-from src.flowsynth.components.utils import powerset, neg, conjunction, disjunction
+from flowsynth.components.utils import powerset, neg, conjunction, disjunction
 
 
 class Automaton:
@@ -477,7 +477,7 @@ def construct_product_Acc(spot_aut_sys, spot_aut_test):
         spot_aut_test: Spot test automaton
 
     Returns:
-        Acc: Dictioary of accepting states for 'sys' and 'test'
+        Acc: Dictionary of accepting states for 'sys' and 'test'
     '''
     Acc = dict()
     spec_prod = spot.product(spot_aut_sys, spot_aut_test)

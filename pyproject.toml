@@ -36,6 +36,9 @@ version = "0.0.0"
 readme = "README.md"
 
 [project.scripts]
-install-spot = "flowsynth.helper:install_spot"
+from_json = "flowsynth.main:main"
 
-[tool.pdm]
+[tool.pytest.ini_options]
+pythonpath = [
+  "src"
+]

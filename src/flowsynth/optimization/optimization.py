@@ -5,7 +5,7 @@ from gurobipy import GRB
 import time
 import numpy as np
 import networkx as nx
-from src.flowsynth.optimization.utils import find_map_G_S
+from flowsynth.optimization.utils import find_map_G_S
 from gurobipy import *
 from copy import deepcopy
 import os
@@ -306,7 +306,7 @@ class MILP():
             tf = time.time()
             delt = tf - t0
 
-    def parse_solution(self):
+    def parse_solution(self, print=False):
         """
         Parse the solution.
 
@@ -365,10 +365,13 @@ class MILP():
             self.model._data["flow"] = flow
             ncuts = 0
 
+            d_parsed = {}
             for key in d_vals.keys():
                 if d_vals[key] > 0.9:
                     ncuts+=1
-                    print('{0} to {1} at {2}'.format(self.GD.node_dict[key[0]], self.GD.node_dict[key[1]],d_vals[key]))
+                    d_parsed.update({(self.GD.node_dict[key[0]], self.GD.node_dict[key[1]]) : d_vals[key]})
+                    if print:
+                        print('{0} to {1} at {2}'.format(self.GD.node_dict[key[0]], self.GD.node_dict[key[1]],d_vals[key]))
 
             self.model._data["ncuts"] = ncuts
             exit_status = 'opt'
@@ -384,7 +387,7 @@ class MILP():
         with open('log/opt_data.json', 'w') as fp:
             json.dump(self.model._data, fp)
 
-        return d_vals, flow, exit_status
+        return d_parsed, flow, exit_status
 
     def optimize(self):
         """

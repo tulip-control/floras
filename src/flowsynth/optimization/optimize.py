@@ -1,7 +1,5 @@
-# call the correct optimization
-from src.flowsynth.optimization.milp_static import solve_opt_static
-from src.flowsynth.optimization.setup_graphs import setup_nodes_and_edges
-from src.flowsynth.optimization.optimization import MILP
+from flowsynth.optimization.setup_graphs import setup_nodes_and_edges
+from flowsynth.optimization.optimization import MILP
 
 from ipdb import set_trace as st
 
