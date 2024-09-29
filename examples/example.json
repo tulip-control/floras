@@ -1,0 +1,16 @@
+{
+      "mazefile" : "maze.txt",
+      "init" : ["(2, 2)"],
+      "goals" : ["(0, 0)", "(0, 4)"],
+      "labels" : {
+        "(0,2)": ["I"],
+        "(2,0)": ["I"],
+        "(2,4)": ["I"],
+        "(0,0)": ["goal"],
+        "(0,4)": ["goal"]
+      },
+      "sysformula" : "F(goal)",
+      "testformula" : "F(I)",
+      "type": "static"
+
+}

@@ -1,0 +1,1 @@
+::: flowsynth.components.automata

@@ -1,0 +1,44 @@
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[project]
+name = "flowsynth"
+description = "A package for network flow-based test synthesis."
+authors = [
+    {name = "flowsynth developers", email = "tbd"},
+]
+license = {text = "BSD-3-Clause"}
+classifiers = [
+    "Topic :: Scientific/Engineering"
+]
+keywords = ["test synthesis"]
+# dynamic = ["version"]
+
+dependencies = [
+    "numpy>=1.24.1",
+    "gurobipy==10.0.1",
+    "imageio>=2.19.3",
+    "ipdb>=0.13.11",
+    "matplotlib>=3.7.3",
+    "networkx>=3.0",
+    "scipy>=1.10.1",
+    "tulip==1.4.0",
+    "mkdocs>=1.6.1",
+    "mkdocs-material>=9.5.34",
+    "mkdocstrings-python>=1.11.1",
+    "pytest>=8.3.3",
+    "coverage>=7.6.1",
+    "pygraphviz>=1.13",
+]
+requires-python = ">=3.10"
+version = "0.0.0"
+readme = "README.md"
+
+[project.scripts]
+from_json = "flowsynth.main:main"
+
+[tool.pytest.ini_options]
+pythonpath = [
+  "src"
+]
