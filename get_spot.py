@@ -55,10 +55,9 @@ def untar(filename):
 def make_spot():
     """Compile spot."""
     path = SPOT_PATH
-    cmd = ["./configure --prefix "+ ENV_PATH]
-    print('running: '+str(cmd)+' in '+path)
-    # subprocess.call(cmd, cwd=path)
-    subprocess.check_call('./configure --prefix /flowsynth/.venv', shell=True, cwd=path)
+    cmd = f'./configure --prefix {ENV_PATH}'
+    print(f'running: `{cmd}` in {path}')
+    subprocess.check_call(cmd, shell=True, cwd=path)
     subprocess.check_call(['make'], cwd=path)
     subprocess.check_call(['make','install'], cwd=path)
 
