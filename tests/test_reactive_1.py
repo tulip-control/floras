@@ -3,10 +3,10 @@ import pytest
 
 import sys
 sys.path.append('../')
-from src.flowsynth.components.automata import get_system_automaton, get_tester_automaton, get_product_automaton
-from src.flowsynth.components.transition_system import TransitionSystemInput, TranSys
-from src.flowsynth.components.product import sync_prod
-from src.flowsynth.optimization.optimize import solve
+from flowsynth.components.automata import get_system_automaton, get_tester_automaton, get_product_automaton
+from flowsynth.components.transition_system import TransitionSystemInput, TranSys
+from flowsynth.components.product import sync_prod
+from flowsynth.optimization.optimize import solve
 
 def test_reactive():
     states_list = ['init', 'd1', 'd2', 'int_goal', 'p1', 'p2', 'goal']

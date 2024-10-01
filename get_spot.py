@@ -1,4 +1,5 @@
 """Download and install spot. (Code adapted from tulip-control/dd/download.py)"""
+import hashlib
 import tarfile
 import urllib.error
 import urllib.request
@@ -9,12 +10,16 @@ import textwrap as _tw
 import sys
 
 SPOT_VERSION: _ty.Final = '2.12'
+SPOT_SHA256: _ty.Final = '26ba076ad57ec73d2fae5482d53e16da95c47822707647e784d8c7cec0d10455'
 SPOT_TARBALL: _ty.Final = f'spot-{SPOT_VERSION}.tar.gz'
 SPOT_URL: _ty.Final = ('http://www.lrde.epita.fr/dload/spot/'
                     f'spot-{SPOT_VERSION}.tar.gz')
 FILE_PATH = os.path.dirname(os.path.realpath(__file__))
 SPOT_PATH = os.path.join(FILE_PATH,f'spot-{SPOT_VERSION}')
 ENV_PATH = sys.prefix
+
+def is_hash_correct(filename):
+    return SPOT_SHA256 == hashlib.sha256(open(filename, 'rb').read()).hexdigest()
 
 def fetch_spot():
     filename = SPOT_TARBALL
@@ -24,6 +29,8 @@ def fetch_spot():
 
 def fetch(url,filename):
     if os.path.isfile(filename):
+        if not is_hash_correct(filename):
+            raise RuntimeError(f'File `{filename}` already present but has unexpected hash.')
         print(
             f'File `{filename}` already present.')
         return
@@ -45,6 +52,8 @@ def fetch(url,filename):
         f'{response.url}\n'
         'Wrote the downloaded data to file:  '
         f'`{filename}`\n')
+    if not is_hash_correct(filename):
+        raise RuntimeError(f'Downloaded file `{filename}` has unexpected hash.')
 
 def untar(filename):
     print(f'++ unpack: {filename}')
@@ -55,12 +64,11 @@ def untar(filename):
 def make_spot():
     """Compile spot."""
     path = SPOT_PATH
-    cmd = ["./configure --prefix "+ ENV_PATH]
-    print('running: '+str(cmd)+' in '+path)
-    # subprocess.call(cmd, cwd=path)
-    subprocess.check_call('./configure --prefix /flowsynth/.venv', shell=True, cwd=path)
-    subprocess.call(['make'], cwd=path)
-    subprocess.call(['make','install'], cwd=path)
+    cmd = f'./configure --prefix {ENV_PATH}'
+    print(f'running: `{cmd}` in {path}')
+    subprocess.check_call(cmd, shell=True, cwd=path)
+    subprocess.check_call(['make'], cwd=path)
+    subprocess.check_call(['make','install'], cwd=path)
 
 if __name__ == '__main__':
     fetch_spot()
