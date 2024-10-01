@@ -30,6 +30,6 @@ jobs:
             - name: Build and install Spot
               run: |
                 pdm run python get_spot.py
-            - name: Build and install Spot
+            - name: Run tests
               run: |
                 pdm run pytest -v tests
