@@ -59,8 +59,8 @@ def make_spot():
     print('running: '+str(cmd)+' in '+path)
     # subprocess.call(cmd, cwd=path)
     subprocess.check_call('./configure --prefix /flowsynth/.venv', shell=True, cwd=path)
-    subprocess.call(['make'], cwd=path)
-    subprocess.call(['make','install'], cwd=path)
+    subprocess.check_call(['make'], cwd=path)
+    subprocess.check_call(['make','install'], cwd=path)
 
 if __name__ == '__main__':
     fetch_spot()
