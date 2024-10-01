@@ -3,13 +3,13 @@
 FLORAS requires `Python>=3.10` and a C++17-compliant compiler (for example `g++>=7.0` or `clang++>=5.0`).
 You can check the versions by running `python --version` and `gcc --version`.
 
-### From Pypi
+<!-- ### From Pypi
 FLORAS can be installed from Pypi as a standard Python package:
 ```
 pip install floras
-```
+``` -->
 ### From Source
-If you want to modify FLORAS or contribute, you can also install it directly from source (see [here](contributing.md)).
+If you want to modify FLORAS or contribute, you can install it directly from source (see [here](contributing.md)).
 
 ### Troubleshooting
 Here are common errors we encountered and what we learned to fix the problem.
