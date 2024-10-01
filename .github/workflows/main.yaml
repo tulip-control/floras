@@ -23,7 +23,9 @@ jobs:
             - name: Setup testing environment
               run: |
                 sudo apt update
-                sudo apt install -y libgraphviz-dev
+                sudo apt install -y \
+                    libgraphviz-dev \
+                    graphviz
             - name: Install Python dependencies
               run: |
                 pdm install
