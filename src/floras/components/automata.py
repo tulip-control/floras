@@ -8,7 +8,7 @@ import networkx as nx
 from collections import OrderedDict as od
 import re
 import os
-from flowsynth.components.utils import powerset, neg, conjunction, disjunction
+from floras.components.utils import powerset, neg, conjunction, disjunction
 
 
 class Automaton:

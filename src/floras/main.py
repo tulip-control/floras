@@ -2,11 +2,11 @@ import json
 import ast
 import argparse
 
-from flowsynth.optimization.optimize import solve
-from flowsynth.components.automata import get_system_automaton, get_tester_automaton, get_product_automaton
-from flowsynth.components.transition_system import TranSys, TransitionSystemInput
-from flowsynth.components.product import sync_prod
-from flowsynth.components.utils import get_states_and_transitions_from_file
+from floras.optimization.optimize import solve
+from floras.components.automata import get_system_automaton, get_tester_automaton, get_product_automaton
+from floras.components.transition_system import TranSys, TransitionSystemInput
+from floras.components.product import sync_prod
+from floras.components.utils import get_states_and_transitions_from_file
 
 from ipdb import set_trace as st
 

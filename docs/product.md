@@ -1,1 +1,1 @@
-::: flowsynth.components.product
+::: floras.components.product
