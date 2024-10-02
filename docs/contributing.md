@@ -3,7 +3,7 @@
 If you want to modify FLORAS or contribute, you can also install it directly from source. We are using pdm to manage the dependencies.
 ```
 pip install pdm
-git clone https://github.com/tulip-control/flowsynth
+git clone https://github.com/tulip-control/floras.git
 ```
 Navigate to the repo and run to install the FLORAS and all required dependencies:
 ```
