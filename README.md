@@ -1,6 +1,8 @@
 # Floras: Flow-Based Reactive Test Synthesis for Autonomous Systems
 
-<img src="https://raw.githubusercontent.com/jgraeb/floras/refs/heads/main/docs/logo.png" width="250/">
+<p align="center">
+  <img src="https://raw.githubusercontent.com/jgraeb/floras/refs/heads/main/docs/logo.png" width="250" />
+</p>
 
 Floras documentation can be found [here](https://floras.readthedocs.io). For installation instructions, please visit [this page](https://floras.readthedocs.io/en/latest/contributing/).
 
