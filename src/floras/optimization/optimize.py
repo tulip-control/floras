@@ -1,5 +1,5 @@
-from flowsynth.optimization.setup_graphs import setup_nodes_and_edges
-from flowsynth.optimization.optimization import MILP
+from floras.optimization.setup_graphs import setup_nodes_and_edges
+from floras.optimization.optimization import MILP
 
 from ipdb import set_trace as st
 

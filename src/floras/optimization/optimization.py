@@ -5,7 +5,7 @@ from gurobipy import GRB
 import time
 import numpy as np
 import networkx as nx
-from flowsynth.optimization.utils import find_map_G_S
+from floras.optimization.utils import find_map_G_S
 from gurobipy import *
 from copy import deepcopy
 import os
