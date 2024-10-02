@@ -1,6 +1,6 @@
 # Floras: Flow-Based Reactive Test Synthesis for Autonomous Systems
 
-picture>
+<picture>
   <img alt="Logo." src="https://raw.githubusercontent.com/jgraeb/floras/refs/heads/main/docs/logo.png" width="250">
 </picture>
 
