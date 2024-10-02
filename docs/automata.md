@@ -1,1 +1,1 @@
-::: flowsynth.components.automata
+::: floras.components.automata

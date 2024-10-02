@@ -3,10 +3,10 @@ requires = ["pdm-backend"]
 build-backend = "pdm.backend"
 
 [project]
-name = "flowsynth"
+name = "floras"
 description = "A package for network flow-based test synthesis."
 authors = [
-    {name = "flowsynth developers", email = "tbd"},
+    {name = "floras developers", email = "tbd"},
 ]
 license = {text = "BSD-3-Clause"}
 classifiers = [
@@ -37,6 +37,6 @@ version = "0.0.0"
 readme = "README.md"
 
 [project.scripts]
-from_json = "flowsynth.main:main"
+from_json = "floras.main:main"
 
 [tool.pdm]

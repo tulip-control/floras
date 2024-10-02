@@ -1,5 +1,10 @@
 # FLORAS - Flow-based Reactive Test Synthesis for Autonomous Systems
 
+<figure markdown="span">
+  ![floras logo](logo.png "floras logo"){ width="300" }
+  <figcaption>Welcome to FLORAS!</figcaption>
+</figure>
+
 FLORAS is an open-source Python package for reactive test synthesis for autonomous systems using network flows.
 
 Installation instructions can be found [here](contributing.md).

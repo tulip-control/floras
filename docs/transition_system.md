@@ -1,1 +1,1 @@
-::: flowsynth.components.transition_system
+::: floras.components.transition_system
