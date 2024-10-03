@@ -1,6 +1,6 @@
 # Contributing to FLORAS
 
-If you want to modify FLORAS or contribute, you can install it directly from source. We are using [pdm](https://pdm-project.org/en/latest/) to manage the dependencies.
+If you want to modify floras or contribute, you can install it directly from source. We are using [pdm](https://pdm-project.org/en/latest/) to manage the dependencies.
 ```
 pip install pdm
 git clone https://github.com/tulip-control/floras.git
@@ -24,7 +24,7 @@ To enter the virtual environment created by pdm:
 ```
 $(pdm venv activate)
 ```
-Now FLORAS is ready to use. If there are problems installing FLORAS, please create an issue on GitHub.
+Now floras is ready to use. If there are problems installing floras, please create an issue on GitHub.
 
 If you need to add any new dependencies you can do that by running:
 ```
