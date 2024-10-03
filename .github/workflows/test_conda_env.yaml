@@ -1,4 +1,4 @@
-name: Testing
+name: floras tests conda env
 on:
   push:
     branches:
@@ -12,7 +12,7 @@ jobs:
       fail-fast: false
       matrix:
         os: ["ubuntu-latest"]
-        python-version: ["3.10"]
+        python-version: ["3.11"]
     defaults:
       run:
         shell: bash -l {0}
@@ -34,11 +34,11 @@ jobs:
             conda info
             conda list
 
-      - name: Add Tulip
-        run: pip install tulip
+      - name: Add pdm
+        run: pip install pdm
 
-      - name: Add Gurobipy
-        run: pip install gurobipy
+      - name: Install package
+        run: pdm install
 
       - name : Install Package for Testing
         run : conda install pytest
