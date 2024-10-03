@@ -26,7 +26,7 @@ jobs:
                 sudo apt install -y \
                     libgraphviz-dev \
                     graphviz
-                apt install libpython3.10-dev
+                sudo apt install libpython3.10-dev
             - name: Install Python dependencies
               run: |
                 pdm install
