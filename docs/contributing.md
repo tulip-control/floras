@@ -14,7 +14,7 @@ Next, install spot by running:
 ```
 pdm run python get_spot.py
 ```
-If you are using conda, instead of the above command, you can install spot directly from conda-forge (this is faster):
+If you are using [conda](https://conda.org/), instead of the above command, you can install spot directly from [conda-forge](https://conda-forge.org/) (this is faster):
 ```
 conda install -c conda-forge spot
 ```
