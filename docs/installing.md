@@ -1,6 +1,6 @@
 # Installing FLORAS
 ### Requirements
-FLORAS requires `Python==3.10` and a C++17-compliant compiler (for example `g++>=7.0` or `clang++>=5.0`).
+FLORAS requires `Python>=3.10` and a C++17-compliant compiler (for example `g++>=7.0` or `clang++>=5.0`).
 You can check the versions by running `python --version` and `gcc --version`.
 
 ### From Source
