@@ -24,8 +24,8 @@ jobs:
                   cache: true
             - name: Setup testing environment
               run: |
-                sudo apt update
-                sudo apt install -y \
+                sudo apt-get update
+                sudo apt-get install -y \
                     libgraphviz-dev \
                     graphviz
             - name: Install Python dependencies
