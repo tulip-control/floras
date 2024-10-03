@@ -1,6 +1,6 @@
 ---
 # configuration for GitHub Actions
-name: floras tests
+name: floras tests in PDM env
 on:
     push:
     pull_request:
@@ -36,7 +36,7 @@ jobs:
               uses: actions/cache@v4
               with:
                   path: spot-2.12
-                  key: ${{ runner.os }}-${{ matrix.python-version }}-spot-${{ hashFiles('get_spot.py') }}
+                  key: ${{ runner.os }}-${{ matrix.python-version }}-spot-${{ hashFiles('get_spot.py') }}-${{ hashFiles('pyproject.toml') }}
             - name: Install Spot
               if: steps.cache-spot.outputs.cache-hit == 'true'
               run: |
