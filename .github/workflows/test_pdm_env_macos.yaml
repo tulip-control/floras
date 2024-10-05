@@ -1,6 +1,6 @@
 ---
 # configuration for GitHub Actions
-name: floras tests in PDM env - Ubuntu
+name: floras tests in PDM env - MacOS
 on:
     push:
     pull_request:
@@ -11,7 +11,7 @@ jobs:
         runs-on: ${{ matrix.os }}
         strategy:
             matrix:
-                os: ["ubuntu-latest"]
+                os: ["macos-latest"]
                 python-version: [
                     '3.10',
                     '3.11',
@@ -23,15 +23,19 @@ jobs:
               with:
                   python-version: ${{ matrix.python-version }}
                   cache: true
-            - name: Setup testing environment
+
+            - name: Install graphviz
               run: |
-                sudo apt-get update
-                sudo apt-get install -y \
-                    libgraphviz-dev \
-                    graphviz
+                 brew install graphviz
+                 pip install --no-cache-dir \
+                    --config-settings="--global-option=build_ext" \
+                    --config-settings="--global-option=-I$(brew --prefix graphviz)/include/" \
+                    --config-settings="--global-option=-L$(brew --prefix graphviz)/lib/" \
+                    pygraphviz
+
             - name: Install Python dependencies
               run: |
-                pdm install
+                pdm install -v
             - name: Try to use cached Spot
               id: cache-spot
               uses: actions/cache@v4

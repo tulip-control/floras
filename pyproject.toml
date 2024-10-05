@@ -29,12 +29,16 @@ dependencies = [
     "mkdocstrings-python>=1.11.1",
     "pytest>=8.3.3",
     "coverage>=7.6.1",
-    "pygraphviz>=1.13",
-    "graphviz>=0.20.3",
+    "pygraphviz>=1.13"
 ]
 requires-python = ">=3.10"
 version = "0.0.0"
 readme = "README.md"
+
+# [project.optional-dependencies]  # This is optional dependencies
+# extra = ["pygraphviz>=1.13"]
+
+# [tool.pdm.dev-dependencies]
 
 [project.scripts]
 from_json = "floras.main:main"
