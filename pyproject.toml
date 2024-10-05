@@ -35,11 +35,6 @@ requires-python = ">=3.10"
 version = "0.0.0"
 readme = "README.md"
 
-# [project.optional-dependencies]  # This is optional dependencies
-# extra = ["pygraphviz>=1.13"]
-
-# [tool.pdm.dev-dependencies]
-
 [project.scripts]
 from_json = "floras.main:main"
 
