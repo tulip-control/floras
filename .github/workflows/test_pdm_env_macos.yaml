@@ -35,6 +35,8 @@ jobs:
 
             - name: Install Python dependencies
               run: |
+                export CFLAGS="-I $(brew --prefix graphviz)/include"
+                export LDFLAGS="-L $(brew --prefix graphviz)/lib"
                 pdm install -v
             - name: Try to use cached Spot
               id: cache-spot
