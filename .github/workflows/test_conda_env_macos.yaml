@@ -46,7 +46,7 @@ jobs:
         uses: actions/cache@v4
         with:
             path: spot-2.12
-            key: ${{ runner.os }}-${{ matrix.python-version }}-spot-${{ hashFiles('get_spot.py') }}-${{ hashFiles('pyproject.toml') }}
+            key: ${{ runner.os }}-${{ matrix.python-version }}-spot-${{ hashFiles('get_spot.py') }}-${{ hashFiles('pyproject.toml') }}-conda
       - name: Install Spot
         if: steps.cache-spot.outputs.cache-hit == 'true'
         run: |
