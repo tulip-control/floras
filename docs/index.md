@@ -1,4 +1,4 @@
-# floras - Flow-based Reactive Test Synthesis for Autonomous Systems
+# Floras - Flow-based Reactive Test Synthesis for Autonomous Systems
 
 <figure markdown="span">
   ![floras logo](logo.png "floras logo"){ width="300" }

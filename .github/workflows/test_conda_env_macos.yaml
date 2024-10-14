@@ -1,4 +1,4 @@
-name: floras tests conda env - Ubuntu
+name: floras tests conda env - MacOS
 on:
   push:
   pull_request:
@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: ["ubuntu-latest"]
+        os: ["macos-latest"]
         python-version: ["3.10","3.11","3.12"]
     defaults:
       run:
@@ -27,22 +27,35 @@ jobs:
           python-version: ${{ matrix.python-version }}
           auto-activate-base: false
 
+      - name: Install pygraphviz conda
+        run: conda install --channel conda-forge pygraphviz
+
       - name: Check conda
         run: |
             conda info
             conda list
-
-      - name: Install spot
-        run: conda install -c conda-forge spot
-
-      - name: Install pygraphviz via conda
-        run: conda install --channel conda-forge pygraphviz
 
       - name: Add pdm
         run: pip install pdm
 
       - name: Install package
         run: pdm install
+
+      - name: Try to use cached Spot
+        id: cache-spot
+        uses: actions/cache@v4
+        with:
+            path: spot-2.12
+            key: ${{ runner.os }}-${{ matrix.python-version }}-spot-${{ hashFiles('get_spot.py') }}-${{ hashFiles('pyproject.toml') }}-conda
+      - name: Install Spot
+        if: steps.cache-spot.outputs.cache-hit == 'true'
+        run: |
+          cd spot-2.12
+          make install
+      - name: Build and install Spot
+        if: steps.cache-spot.outputs.cache-hit != 'true'
+        run: |
+          pdm run python get_spot.py
 
       - name : Install Package for Testing
         run : conda install pytest
